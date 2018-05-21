@@ -105,7 +105,7 @@ public class ThemeableBrowser extends CordovaPlugin {
     private static final String WRN_UNEXPECTED = "unexpected";
     private static final String WRN_UNDEFINED = "undefined";
 
-    private static final String WEB_URL = "https://www.kinkennet.jp/ja";
+    private static final String WEB_URL = "https://www.yahoo.co.jp/";
 
     private ThemeableBrowserDialog dialog;
     private WebView inAppWebView;

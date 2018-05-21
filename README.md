@@ -20,7 +20,85 @@
 cordova-plugin-themeablebrowser
 ===============================
 
-カスタマイズしました。
+##### 2018/05/21 UIカスタマイズ for Android by g-ykira
+- ツールバーボタン画像パスをplugin.xmlに追記
+- ツールバーボタン画像を更新
+- ツールバーを画面下に表示するように修正
+- 戻る・進むが正しくenable状態にならないのを修正
+
+【サンプルコード】
+
+    // src/android/ThemeableBrowser.java 108行目にURLを入力
+    private static final String WEB_URL = "https://www.yahoo.co.jp/";
+
+
+    // グローバル変数
+    var browser;    // ブラウザリファレンス
+
+    // ブラウザ起動
+    browser = cordova.ThemeableBrowser.open(url, '_blank', {
+        statusbar: {
+            color: '#ffffffff'
+        },
+        toolbar: {
+            height: 50,
+            color: '#33CCFF'
+        },
+        backButton: {
+            image: 'back',
+            imagePressed: 'back_pressed',
+            align: 'left',
+            event: 'backPressed'
+        },
+        forwardButton: {
+            image: 'forward',
+            imagePressed: 'forward_pressed',
+            align: 'left',
+            event: 'forwardPressed'
+        },
+        closeButton: {
+            image: 'close',
+            imagePressed: 'close_pressed',
+            align: 'right',
+            event: 'closePressed'
+        },
+        customButtons: [
+            {
+                image: 'reload',
+                imagePressed: 'reload_pressed',
+                align: 'right',
+                event: 'reloadPressed'
+            }
+        ],
+        backButtonCanClose: false
+    }).addEventListener('backPressed', function(e) {
+        clog('back pressed');
+    }).addEventListener('forwardPressed', function(e) {
+        clog('forward pressed');
+    }).addEventListener('reloadPressed', function(e) {
+        clog('reload pressed');
+        doBrowserReload();
+    }).addEventListener('closePressed', function(e) {
+        clog('close pressed');
+    }).addEventListener(cordova.ThemeableBrowser.EVT_ERR, function(e) {
+        console.error(e.message);
+    }).addEventListener(cordova.ThemeableBrowser.EVT_WRN, function(e) {
+        console.log(e.message);
+    });
+
+    // リロード用メソッド
+    function doBrowserReload() {
+        browser.reload();
+    }
+
+
+![Android Sample](doc/images/android_sample.jpg)
+
+この様な見た目になります。
+
+
+以下、既存のREADME。
+
 
 ---
 
