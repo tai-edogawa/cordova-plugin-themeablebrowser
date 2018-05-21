@@ -49,6 +49,15 @@
         <source-file src="src/android/ThemeableBrowserDialog.java" target-dir="src/com/initialxy/cordova/themeablebrowser" />
         <source-file src="src/android/InAppChromeClient.java" target-dir="src/com/initialxy/cordova/themeablebrowser" />
         <source-file src="src/android/ThemeableBrowserUnmarshaller.java" target-dir="src/com/initialxy/cordova/themeablebrowser" />
+
+        <resource-file src="src/android/res/drawable-xhdpi/back.png" target="res/drawable-xhdpi/back.png" />
+        <resource-file src="src/android/res/drawable-xhdpi/back_pressed.png" target="res/drawable-xhdpi/back_pressed.png" />
+        <resource-file src="src/android/res/drawable-xhdpi/forward.png" target="res/drawable-xhdpi/forward.png" />
+        <resource-file src="src/android/res/drawable-xhdpi/forward_pressed.png" target="res/drawable-xhdpi/forward_pressed.png" />
+        <resource-file src="src/android/res/drawable-xhdpi/reload.png" target="res/drawable-xhdpi/reload.png" />
+        <resource-file src="src/android/res/drawable-xhdpi/reload_pressed.png" target="res/drawable-xhdpi/reload_pressed.png" />
+        <resource-file src="src/android/res/drawable-xhdpi/close.png" target="res/drawable-xhdpi/close.png" />
+        <resource-file src="src/android/res/drawable-xhdpi/close_pressed.png" target="res/drawable-xhdpi/close_pressed.png" />
     </platform>
 
     <!-- ios -->
@@ -66,5 +75,14 @@
         <source-file src="src/ios/CDVThemeableBrowser.m" />
 
         <framework src="CoreGraphics.framework" />
+
+        <resource-file src="src/ios/Resources/back@2x.png" target="Resources/back@2x.png" />
+        <resource-file src="src/ios/Resources/back_pressed@2x.png" target="Resources/back_pressed@2x.png" />
+        <resource-file src="src/ios/Resources/forward@2x.png" target="Resources/forward@2x.png" />
+        <resource-file src="src/ios/Resources/forward_pressed@2x.png" target="Resources/forward_pressed@2x.png" />
+        <resource-file src="src/ios/Resources/reload@2x.png" target="Resources/reload@2x.png" />
+        <resource-file src="src/ios/Resources/reload_pressed@2x.png" target="Resources/reload_pressed@2x.png" />
+        <resource-file src="src/ios/Resources/close@2x.png" target="Resources/close@2x.png" />
+        <resource-file src="src/ios/Resources/close_pressed@2x.png" target="Resources/close_pressed@2x.png" />
     </platform>
 </plugin>

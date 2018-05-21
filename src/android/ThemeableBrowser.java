@@ -52,6 +52,7 @@ import android.webkit.CookieManager;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.webkit.WebBackForwardList;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -104,10 +105,15 @@ public class ThemeableBrowser extends CordovaPlugin {
     private static final String WRN_UNEXPECTED = "unexpected";
     private static final String WRN_UNDEFINED = "undefined";
 
+    private static final String WEB_URL = "https://www.kinkennet.jp/ja";
+
     private ThemeableBrowserDialog dialog;
     private WebView inAppWebView;
     private EditText edittext;
     private CallbackContext callbackContext;
+
+    private Button back;
+    private Button forward;
 
     /**
      * Executes the request and returns PluginResult.
@@ -475,6 +481,14 @@ public class ThemeableBrowser extends CordovaPlugin {
     public void goBack() {
         if (this.inAppWebView != null && this.inAppWebView.canGoBack()) {
             this.inAppWebView.goBack();
+
+            if (back != null) {
+                back.setEnabled(this.inAppWebView.canGoBack());
+            }
+
+            if (forward != null) {
+                forward.setEnabled(this.inAppWebView.canGoForward());
+            }
         }
     }
 
@@ -492,6 +506,14 @@ public class ThemeableBrowser extends CordovaPlugin {
     private void goForward() {
         if (this.inAppWebView != null && this.inAppWebView.canGoForward()) {
             this.inAppWebView.goForward();
+
+            if (back != null) {
+                back.setEnabled(this.inAppWebView.canGoBack());
+            }
+
+            if (forward != null) {
+                forward.setEnabled(this.inAppWebView.canGoForward());
+            }
         }
     }
 
@@ -617,7 +639,7 @@ public class ThemeableBrowser extends CordovaPlugin {
                 });
 
                 // Back button
-                final Button back = createButton(
+                back = createButton(
                     features.backButton,
                     "back button",
                     new View.OnClickListener() {
@@ -640,7 +662,7 @@ public class ThemeableBrowser extends CordovaPlugin {
                 }
 
                 // Forward button
-                final Button forward = createButton(
+                forward = createButton(
                     features.forwardButton,
                     "forward button",
                     new View.OnClickListener() {
@@ -770,6 +792,17 @@ public class ThemeableBrowser extends CordovaPlugin {
 
                         if (back != null) {
                             back.setEnabled(canGoBack || features.backButtonCanClose);
+                        }
+
+                        if (forward != null) {
+                            forward.setEnabled(canGoForward);
+                        }
+                    }
+
+                    @Override
+                    public void onLoadResource(String url, boolean canGoBack, boolean canGoForward) {
+                        if (back != null) {
+                            back.setEnabled(canGoBack);
                         }
 
                         if (forward != null) {
@@ -921,15 +954,15 @@ public class ThemeableBrowser extends CordovaPlugin {
                     main.addView(inAppWebView);
                 }
 
+                if (!features.fullscreen) {
+                    // If not full screen, we add inAppWebView after adding toolbar.
+                    main.addView(inAppWebView);
+                }
+
                 // Don't add the toolbar if its been disabled
                 if (features.location) {
                     // Add our toolbar to our main view/layout
                     main.addView(toolbar);
-                }
-
-                if (!features.fullscreen) {
-                    // If not full screen, we add inAppWebView after adding toolbar.
-                    main.addView(inAppWebView);
                 }
 
                 WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
@@ -1180,8 +1213,8 @@ public class ThemeableBrowser extends CordovaPlugin {
     }
 
     public static interface PageLoadListener {
-        public void onPageFinished(String url, boolean canGoBack,
-                boolean canGoForward);
+        public void onPageFinished(String url, boolean canGoBack, boolean canGoForward);
+        public void onLoadResource(String url, boolean canGoBack, boolean canGoForward);
     }
 
     /**
@@ -1266,7 +1299,6 @@ public class ThemeableBrowser extends CordovaPlugin {
             return false;
         }
 
-
         /*
          * onPageStarted fires the LOAD_START_EVENT
          *
@@ -1334,6 +1366,20 @@ public class ThemeableBrowser extends CordovaPlugin {
 
                 sendUpdate(obj, true, PluginResult.Status.ERROR);
             } catch (JSONException ex) {
+            }
+        }
+
+        public void onLoadResource(WebView view, String url) {
+            super.onLoadResource(view, url);
+
+            if (url.startsWith(WEB_URL)) {
+                WebBackForwardList list = inAppWebView.copyBackForwardList();
+                int current_idx = list.getCurrentIndex();
+                int max_idx = list.getSize();
+
+                if (this.callback != null) {
+                    this.callback.onLoadResource(url, (max_idx > 0), view.canGoForward());
+                }
             }
         }
     }
