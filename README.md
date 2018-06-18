@@ -20,7 +20,7 @@
 cordova-plugin-themeablebrowser
 ===============================
 
-##### 2018/05/21 UIカスタマイズ for Android by g-ykira
+##### 2018/06/18 UIカスタマイズ for iOS & Android by g-ykira
 - ツールバーボタン画像パスをplugin.xmlに追記
 - ツールバーボタン画像を更新
 - ツールバーを画面下に表示するように修正
@@ -91,8 +91,8 @@ cordova-plugin-themeablebrowser
         browser.reload();
     }
 
-
 ![Android Sample](doc/images/android_sample.jpg)
+![Android Sample](doc/images/ios_sample.jpg)
 
 この様な見た目になります。
 
