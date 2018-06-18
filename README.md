@@ -92,7 +92,7 @@ cordova-plugin-themeablebrowser
     }
 
 ![Android Sample](doc/images/android_sample.jpg)
-![Android Sample](doc/images/ios_sample.jpg)
+![iOS Sample](doc/images/ios_sample.jpg)
 
 この様な見た目になります。
 
