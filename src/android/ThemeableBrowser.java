@@ -1296,6 +1296,12 @@ public class ThemeableBrowser extends CordovaPlugin {
                     Log.e(LOG_TAG, "Error sending sms " + url + ":" + e.toString());
                 }
             }
+            else if(url.startsWith("intent:")) {
+              Intent intent = new Intent(Intent.ACTION_VIEW);
+              intent.setData(Uri.parse(url));
+              cordova.getActivity().startActivity(intent);
+              return true;
+            }
             return false;
         }
 
